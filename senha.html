@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: monospace;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h2 {
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        input {
+            background: #111;
+            border: 1px solid #444;
+            padding: 10px;
+            width: 290px;
+            color: #e0e0e0;
+            font-size: 14px;
+        }
+        button {
+            margin-top: 12px;
+            background: #222;
+            border: 1px solid #555;
+            padding: 8px 20px;
+            color: #e0e0e0;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #333;
+        }
+        .msg {
+            margin-top: 12px;
+            font-size: 14px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Insira a senha</h2>
+
+    <input type="text" id="senha" placeholder="Digite a senha descoberta anteriormente">
+    <button onclick="verificar()">Entrar</button>
+    <div class="msg" id="msg"></div>
+
+    <script>
+        // Senha verdadeira escondida (ASCII de: O b s e r v e r)
+        const senhaOculta = [79, 98, 115, 101, 114, 118, 101, 114];
+
+        function asciiParaTexto(arr) {
+            let s = "";
+            for (let c of arr) s += String.fromCharCode(c);
+            return s;
+        }
+
+        const senhaCorreta = asciiParaTexto(senhaOculta);
+
+        function binarioParaTexto(bin) {
+            let resultado = "";
+            for (let i = 0; i < bin.length; i += 8) {
+                resultado += String.fromCharCode(parseInt(bin.substring(i, i + 8), 2));
+            }
+            return resultado;
+        }
+
+        function verificar() {
+            const input = document.getElementById("senha").value.trim();
+            const decodificado = binarioParaTexto(input);
+
+            if (decodificado === senhaCorreta) {
+                window.location.href = "proxima_etapa.html";
+            } else {
+                document.getElementById("msg").innerText = "Senha incorreta.";
+            }
+        }
+    </script>
+</body>
+</html>
